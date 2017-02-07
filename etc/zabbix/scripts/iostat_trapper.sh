@@ -6,7 +6,7 @@ ZABBIX_SENDER='/usr/bin/env zabbix_sender'
 CONFIG='/etc/zabbix/zabbix_agentd.conf'
 
 
-DEVICES=$(lsblk -ldno NAME | xargs echo)
+DEVICES=$(lsblk -ldno NAME | egrep -v '^(loop)' | xargs echo)
 S_TIME_FORMAT=ISO iostat -x $DEVICES $SECONDS $COUNT | awk -v ct=$1 -v devices_list="$DEVICES" '
 	BEGIN {
 		devices_cnt = split(devices_list, devices, " ")
